@@ -15,20 +15,9 @@ const TYPES = {
   CUSTOM: 'custom',
 };
 
-const SIZES = {
-  ICON: 'icon',
-  BIG: 'big',
-  DEFAULT: 'default',
-  SMALL: 'small',
-  CUSTOM: 'custom',
-  MIDDLE: 'middle',
-};
-
-const HTML_TYPES = { RESET: 'reset', SUBMIT: 'submit', BUTTON: 'button' };
-
 const TYPE_STYLES = {
   [TYPES.PRIMARY]:
-    'text-white bg-indigo-500  hover:bg-indigo-700 focus:ring-indigo-100 focus:ring-2 hover:shadow-button transition-all disabled:bg-black-25',
+    'text-white bg-indigo-500 hover:bg-indigo-600 focus:ring-indigo-100 focus:ring-2 hover:shadow-button transition-all disabled:bg-gray-200',
   [TYPES.BLUE]:
     'text-white bg-blue-500 hover:bg-blue-700 focus:ring-blue-100 focus:ring-2 hover:shadow-button transition-all',
   [TYPES.SECONDARY]:
@@ -47,66 +36,69 @@ const TYPE_STYLES = {
   [TYPES.CUSTOM]: '',
 };
 
+const SIZES = {
+  ICON: 'icon',
+  BIG: 'big',
+  DEFAULT: 'default',
+  SMALL: 'small',
+  CUSTOM: 'custom',
+  MIDDLE: 'middle',
+};
+
 const SIZE_STYLES = {
-  [SIZES.ICON]: 'w-7 h-7 m-2px rounded-lg',
+  [SIZES.ICON]: 'w-7 h-7 rounded-lg',
   [SIZES.SMALL]: 'px-3 py-1',
-  [SIZES.DEFAULT]: 'text-sm rounded-lg py-2 w-25',
-  [SIZES.MIDDLE]: 'text-sm rounded-lg py-2 px-6',
+  [SIZES.MIDDLE]: 'text-12 rounded-lg py-2 px-6',
   [SIZES.BIG]: 'px-6 py-3',
   [SIZES.CUSTOM]: '',
 };
 
+const HTML_TYPES = { RESET: 'reset', SUBMIT: 'submit', BUTTON: 'button' };
 const DEFAULT_STYLES = 'flex-shrink-0 active:opacity-75';
+const DISABLED_STYLES = 'cursor-not-allowed';
 
-const Button = forwardRef((props, ref) => {
-  const {
-    children,
-    className,
-    type = TYPES.PRIMARY,
-    size = SIZES.MIDDLE,
-    htmlType = HTML_TYPES.BUTTON,
-    onClick,
-    ...buttonProps
-  } = props;
-  const typeStyles = TYPE_STYLES?.[type] || '';
-  const sizeStyles = SIZE_STYLES?.[size] || '';
-  return (
-    <button
-      ref={ref}
-      type={htmlType}
-      onClick={onClick}
-      children={children}
-      className={classNames(typeStyles, sizeStyles, className, DEFAULT_STYLES)}
-      {...buttonProps}
-    />
-  );
-});
+const Button = forwardRef(
+  ({ children, className, type, size, htmlType, onClick, disabled, ...buttonProps }, ref) => {
+    const typeStyles = TYPE_STYLES?.[type] || null;
+    const sizeStyles = SIZE_STYLES?.[size] || null;
+
+    return (
+      <button
+        ref={ref}
+        type={htmlType}
+        onClick={onClick}
+        children={children}
+        className={classNames(
+          typeStyles,
+          sizeStyles,
+          className,
+          disabled ? DISABLED_STYLES : DEFAULT_STYLES,
+        )}
+        disabled={disabled}
+        {...buttonProps}
+      />
+    );
+  },
+);
+
+Button.defaultProps = {
+  children: null,
+  className: null,
+  type: TYPES.PRIMARY,
+  size: SIZES.MIDDLE,
+  htmlType: HTML_TYPES.BUTTON,
+  onClick: null,
+  buttonProps: null,
+  disabled: null,
+};
 
 Button.propTypes = {
   className: PropTypes.string,
-  type: PropTypes.oneOf([
-    TYPES.PRIMARY,
-    TYPES.BLUE,
-    TYPES.SECONDARY,
-    TYPES.DANGER,
-    TYPES.GHOST,
-    TYPES.UNDERLINE_BUTTON,
-    TYPES.ICON,
-    TYPES.CUSTOM,
-    TYPES.NOT_BORDER,
-    TYPES.DARK,
-  ]),
-
-  size: PropTypes.oneOf([
-    SIZES.ICON,
-    SIZES.SMALL,
-    SIZES.DEFAULT,
-    SIZES.BIG,
-    SIZES.CUSTOM,
-    SIZES.MIDDLE,
-  ]),
-  htmlType: PropTypes.oneOf([HTML_TYPES.SUBMIT, HTML_TYPES.RESET, HTML_TYPES.BUTTON]),
+  type: PropTypes.oneOf(Object.values(TYPES)),
+  size: PropTypes.oneOf(Object.values(SIZES)),
+  htmlType: PropTypes.oneOf(Object.values(HTML_TYPES)),
   onClick: PropTypes.func,
+  disabled: PropTypes.bool,
 };
 
 export default Button;

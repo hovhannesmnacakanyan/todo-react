@@ -1,33 +1,32 @@
 import React from 'react';
-import classNames from 'classnames';
-import { Space } from 'style-guide';
+import PropTypes from 'prop-types';
+// import classNames from 'classnames';
+// import { Space } from 'style-guide';
 
-const TEXT_ALIGN = {
-  DEFAULT: 'left',
-  CENTER: 'center',
-  RIGHT: 'right',
-};
+// const TEXT_ALIGN = {
+//   DEFAULT: 'left',
+//   CENTER: 'center',
+//   RIGHT: 'right',
+// };
 
-const Card = (props) => {
-  const {
-    cardClasses = null,
-    children = null,
-    titleAlign = TEXT_ALIGN.DEFAULT,
-    subTitleAlign = TEXT_ALIGN.DEFAULT,
-    components: { header = null, body = null, footer = null },
-    data: {
-      title = null,
-      subtitle = null,
-      headerClasses = 'p-4',
-      bodyClasses = 'p-4',
-      footerClasses = 'p-4',
-    },
-  } = props;
+const Card = ({ className, children }) => {
+  // const {
+  // titleAlign = TEXT_ALIGN.DEFAULT,
+  // subTitleAlign = TEXT_ALIGN.DEFAULT,
+  // components: { header = null, body = null, footer = null },
+  // data: {
+  //   title = null,
+  //   subtitle = null,
+  //   headerClasses = 'p-4',
+  //   bodyClasses = 'p-4',
+  //   footerClasses = 'p-4',
+  // },
+  // } = props;
 
   return (
-    <div className={cardClasses} children={children}>
+    <div className={className} children={children}>
       {/* header */}
-      {header ? (
+      {/* {header ? (
         <Space className={headerClasses}>
           {title ? (
             <>
@@ -37,9 +36,9 @@ const Card = (props) => {
           ) : null}
           {header}
         </Space>
-      ) : null}
+      ) : null} */}
       {/* body */}
-      {body ? (
+      {/* {body ? (
         <Space className={bodyClasses}>
           {subtitle ? (
             <>
@@ -55,15 +54,24 @@ const Card = (props) => {
           ) : null}
           {body}
         </Space>
-      ) : null}
+      ) : null} */}
       {/* footer */}
-      {footer ? (
+      {/* {footer ? (
         <Space className={footerClasses}>
           <div className='flex align-middle justify-center'>{footer}</div>
         </Space>
-      ) : null}
+      ) : null} */}
     </div>
   );
+};
+
+Card.defaultProps = {
+  children: null,
+  className: null,
+};
+
+Card.propTypes = {
+  className: PropTypes.string,
 };
 
 export default Card;

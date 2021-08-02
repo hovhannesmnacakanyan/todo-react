@@ -1,15 +1,23 @@
 @tailwind base;
+
 @tailwind components;
+
 @tailwind utilities;
 
 @layer base {
   .btn {
     @apply text-white px-4 py-2 inline-block rounded;
   }
+
   .btn-green {
     @apply bg-green-500 hover:bg-green-400 duration-700;
   }
+
   .btn-gray {
     @apply bg-gray-500 hover:bg-gray-400 duration-700;
   }
+}
+
+html {
+  @apply 2xs:text-10 xs:text-12 sm:text-14 md:text-14 lg:text-16 xl:text-18 2xl:text-20 3xl:text-24 4xl:text-26;
 }
